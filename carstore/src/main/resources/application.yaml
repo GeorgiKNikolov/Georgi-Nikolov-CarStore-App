@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/carstore?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8"
+    username: root
+    password: 8609
+  jpa:
+    datasource-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+mail:
+    host: smtp.gmail.com
+    port: 587
+    username: georgikireto4@gmail.com
+    password: pgmu uccs cdtt dczu
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+security:
+  oauth2:
+    client:
+      registration:
+        facebook:
+          client-id: 1145050960240766
+          client-secret: 90affa5fbf7dc4d168d3b49877f588e5
+

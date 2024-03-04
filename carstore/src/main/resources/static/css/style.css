@@ -1,0 +1,5 @@
+.comments {
+    background-color: var(--lightGray);
+    padding: 40px;
+    border-radius: 10px;
+}
