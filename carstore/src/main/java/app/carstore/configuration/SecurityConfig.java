@@ -81,8 +81,8 @@ public class SecurityConfig {
 
     private ClientRegistration facebookClientRegistration() {
         return CommonOAuth2Provider.FACEBOOK.getBuilder("facebook")
-                .clientId("1145050960240766")
-                .clientSecret("90affa5fbf7dc4d168d3b49877f588e5")
+                .clientId("facebook")
+                .clientSecret("secret")
                 .build();
     }
 

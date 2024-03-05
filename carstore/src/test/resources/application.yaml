@@ -14,8 +14,8 @@ mail:
   default-encoding: UTF-8
   host: smtp.gmail.com
   port: 587
-  username: georgikireto4@gmail.com
-  password: pgmu uccs cdtt dczu
+  username:
+  password:
   protocol: smtp
   tls: true
   properties.mail.smtp:
