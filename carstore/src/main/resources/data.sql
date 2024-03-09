@@ -1,16 +1,21 @@
 
 insert into users_roles (id, user_role)
-values (1,  'ADMIN'), (2, 'USER');
+values (1,  'ADMIN'), (2, 'USER'), (3, 'MODERATOR');
 
 insert into users (id, email, first_name, is_active, last_name, password, image_url )
-values (1, 'admin@abv.bg', 'georgi', 1, 'admin', '383392396be39c421e7928f5789f090357f77664b1bf3c091c228fe75ca85e5599bff4633cee0792', null ),
-       (2, 'user@abv.bg', 'georgi', 1, 'user', '383392396be39c421e7928f5789f090357f77664b1bf3c091c228fe75ca85e5599bff4633cee0792', null );
+values (1, 'admin@abv.bg', 'georgi', 1, 'admin', '383392396be39c421e7928f5789f090357f77664b1bf3c091c228fe75ca85e5599bff4633cee0792', 'https://miro.medium.com/v2/resize:fit:1400/1*2bjwCLaA8TfH40OXcyLNvA.png' ),
+       (2, 'user@abv.bg', 'georgi', 1, 'user', '383392396be39c421e7928f5789f090357f77664b1bf3c091c228fe75ca85e5599bff4633cee0792', 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2019/11/Goku-Feature-Image.jpg' ),
+       (3, 'moderator@abv.bg', 'georgi', 1, 'moderator', '383392396be39c421e7928f5789f090357f77664b1bf3c091c228fe75ca85e5599bff4633cee0792','https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c335e781-db6d-4112-bb5f-c3b9de5d5e77/width=1200/c335e781-db6d-4112-bb5f-c3b9de5d5e77.jpeg');
 --                                               pass:kikiriki
 
 insert into users_user_roles(user_entity_id, user_roles_id)
 values (1,1),
        (1,2),
-       (2,2);
+       (2,2),
+       (3,2),
+       (3,3);
+
+
 
 insert into brands (id, name)
 values (1, 'Ford'), (2, 'Toyota'), (3, 'Renault'), (4, 'BMW');

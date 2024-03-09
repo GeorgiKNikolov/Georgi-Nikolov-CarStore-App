@@ -5,8 +5,11 @@ import app.carstore.model.dto.user.UserRegisterDTO;
 import app.carstore.model.entity.UserEntity;
 import app.carstore.model.mapper.UserMapper;
 
+import app.carstore.model.view.UserDisplayView;
 import app.carstore.repository.UserRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.springframework.security.core.Authentication;
@@ -82,6 +85,12 @@ public class UserService {
         SecurityContextHolder
                 .getContext()
                 .setAuthentication(authentication);
+
+    }
+
+    public Page<UserDisplayView> findAllUsers(Pageable  pageable){
+        return userRepository.findAll(pageable).
+                map(userMapper::userEntityToUserView);
 
     }
 }

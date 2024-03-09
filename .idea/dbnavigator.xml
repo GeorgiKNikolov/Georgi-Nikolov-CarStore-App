@@ -34,7 +34,6 @@
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
     <mapping file-url="file://$PROJECT_DIR$/carstore/src/main/resources/data.sql" connection-id="8473cee6-a761-466a-be16-87d52dcfc597" session-id="MAIN" current-schema="carstore" />
-    <mapping file-url="file://$PROJECT_DIR$/carstore/target/classes/data.sql" connection-id="8473cee6-a761-466a-be16-87d52dcfc597" session-id="MAIN" current-schema="carstore" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />

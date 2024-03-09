@@ -26,21 +26,21 @@ public class OfferSpecification implements Specification<OfferEntity> {
         Predicate p = cb.conjunction();
 
         if (searchOfferDTO.getModel() != null && !searchOfferDTO.getModel().isEmpty()) {
-            p.getExpressions().add(
-                    cb.and(cb.equal(root.join("model").get("name"), searchOfferDTO.getModel()))
-            );
+
+            p = cb.and(cb.equal(root.join("model").get("name"), searchOfferDTO.getModel()));
+
         }
 
         if (searchOfferDTO.getMinPrice() != null) {
-            p.getExpressions().add(
-                    cb.and(cb.greaterThanOrEqualTo(root.get("price"), searchOfferDTO.getMinPrice()))
-            );
+
+            p = cb.and(cb.greaterThanOrEqualTo(root.get("price"), searchOfferDTO.getMinPrice()));
+
         }
 
         if (searchOfferDTO.getMaxPrice() != null) {
-            p.getExpressions().add(
-                    cb.and(cb.lessThanOrEqualTo(root.get("price"), searchOfferDTO.getMaxPrice()))
-            );
+
+           p = cb.and(cb.lessThanOrEqualTo(root.get("price"), searchOfferDTO.getMaxPrice()));
+
         }
 
 

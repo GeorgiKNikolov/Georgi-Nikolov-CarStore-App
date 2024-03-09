@@ -24,7 +24,6 @@ public class UserEntity extends BaseEntity {
 
     private String imageUrl;
 
-
     @ManyToMany(fetch= FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 
