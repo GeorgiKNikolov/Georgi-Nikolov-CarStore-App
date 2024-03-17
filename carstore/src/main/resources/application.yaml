@@ -19,8 +19,8 @@ spring:
 mail:
     host: smtp.gmail.com
     port: 587
-    username: georgikireto4@gmail.com
-    password: pgmu uccs cdtt dczu
+    username: 
+    password:
     protocol: smtp
     tls: true
     properties.mail.smtp:
@@ -32,6 +32,6 @@ security:
     client:
       registration:
         facebook:
-          client-id: 1145050960240766
-          client-secret: 90affa5fbf7dc4d168d3b49877f588e5
+          client-id: 
+          client-secret: 
 
