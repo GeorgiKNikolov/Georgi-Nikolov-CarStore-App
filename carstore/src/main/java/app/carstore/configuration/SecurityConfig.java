@@ -49,7 +49,13 @@ public class SecurityConfig {
         http.
                 authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("/", "/users/register", "/brands/all").permitAll()
+                                .requestMatchers("/",
+                                        "/users/register",
+                                        "/brands/all",
+                                        "/users/forgot",
+                                        "/change",
+                                        "/verify",
+                                        "/users/pending-verification").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 ).csrf(Customizer.withDefaults()).formLogin((form) ->

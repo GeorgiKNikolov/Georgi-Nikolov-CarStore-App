@@ -1,15 +1,20 @@
 package app.carstore.service;
 
 
+import app.carstore.model.dto.ForgottenPasswordDTO;
 import app.carstore.model.dto.user.UserRegisterDTO;
 import app.carstore.model.entity.UserEntity;
+import app.carstore.model.entity.UserRoleEntity;
+import app.carstore.model.enums.UserRoleEnum;
 import app.carstore.model.mapper.UserMapper;
 
 import app.carstore.model.view.UserDisplayView;
 import app.carstore.repository.UserRepository;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.springframework.security.core.Authentication;
@@ -20,8 +25,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
 
 
 @Service
@@ -64,33 +73,74 @@ public class UserService {
         UserEntity newUser = userMapper.userDtoUserEntity(userRegisterDto);
         newUser.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
 
+        String verificationCode = RandomStringUtils.random(10);
+        newUser.setVerificationCode(verificationCode);
+        newUser.setActive(false);
+        newUser.setUserRoles(List.of());
+
         userRepository.save(newUser);
-        login(newUser);
+
         emailService.sendRegistrationEmail(newUser.getEmail(),
-                newUser.getFirstName() + " " + newUser.getLastName(),preferredLocale );
+                newUser.getFirstName() + " " + newUser.getLastName(),preferredLocale, newUser );
 
     }
 
-    public void login(UserEntity userEntity) {
-        UserDetails userDetails =
-                userDetailsService
-                        .loadUserByUsername(userEntity.getEmail());
-
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        userDetails.getPassword(),
-                        userDetails.getAuthorities()
-                );
-        SecurityContextHolder
-                .getContext()
-                .setAuthentication(authentication);
-
-    }
 
     public Page<UserDisplayView> findAllUsers(Pageable  pageable){
         return userRepository.findAll(pageable).
                 map(userMapper::userEntityToUserView);
 
     }
+
+    public boolean findEmailIsPresent(String email) {
+        UserEntity user = userRepository.findByEmail(email).orElse(null);
+        return user != null;
+    }
+
+    public void findUserAndSendEmail(String email, Locale resolveLocale) {
+
+        UserEntity user = userRepository.findByEmail(email).orElseThrow();
+
+        String randomPassword = RandomStringUtils.random(6);
+
+        user.setPassword(randomPassword);
+
+        this.userRepository.save(user);
+
+        emailService.sendNewPassword(user,resolveLocale);
+
+
+    }
+
+    public void setUserNewPassword(ForgottenPasswordDTO forgottenPasswordDTO) {
+
+       UserEntity user = userRepository.findByPassword(forgottenPasswordDTO.getGivenPassword()).orElseThrow();
+
+        user.setPassword(passwordEncoder.encode(forgottenPasswordDTO.getPassword()));
+
+        userRepository.save(user);
+    }
+
+    public boolean verify(String code) {
+        UserEntity user = userRepository.findByVerificationCode(code);
+
+        if (user == null || user.isActive()) {
+            return false;
+        }else {
+            user.setVerificationCode(null);
+            user.setActive(true);
+            userRepository.save(user);
+        }
+        return true;
+    }
+
+    @Scheduled(cron = "0 0 00 * * *")
+    private void deleteAllEnabledUsers() {
+        userRepository.findAll()
+                .stream()
+                .filter(u -> !u.isActive())
+                .forEach(user -> userRepository.deleteById(user.getId()));
+    }
+
 }
+

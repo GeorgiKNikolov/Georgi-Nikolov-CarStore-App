@@ -4,6 +4,7 @@ import app.carstore.model.dto.user.UserRegisterDTO;
 import app.carstore.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,17 @@ public class UserRegistrationController {
         userService.registerAndLogin(userRegisterModel,localeResolver.resolveLocale(request));
 
 
-        return "redirect:/users/login";
+        return "redirect:/users/pending-verification";
+    }
+
+    @GetMapping("/users/pending-verification")
+    public String pending(){
+        return "pending-verification";
+    }
+
+
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        return userService.verify(code)? "successful-verification" : "failed-verification";
     }
 }

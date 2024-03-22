@@ -22,7 +22,10 @@ public class UserEntity extends BaseEntity {
 
     private boolean isActive;
 
+    private String verificationCode;
+
     private String imageUrl;
+
 
     @ManyToMany(fetch= FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
@@ -36,6 +39,14 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public UserEntity setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+        return this;
+    }
 
     public String getPassword() {
         return password;
